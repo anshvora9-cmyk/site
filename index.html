@@ -39,6 +39,7 @@ body.home .top{position:fixed;left:0;right:0;color:#FFF8EE;text-shadow:0 1px 8px
 .map .stop.l{text-align:right}
 .map .x{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;display:grid;place-items:center;font-size:15px;color:var(--mute)}
 .map .x.gold{color:#E8B64C;font-size:20px}
+.song{margin:0 0 18px}.song iframe{display:block;width:100%;height:80px;border:0;border-radius:12px;background:#111}.song p{font-size:13px;color:var(--mute);margin:6px 0 0}
 .reqs{padding-left:22px;margin:20px 0 10px}.reqs li{margin:0 0 10px}.reqs li span{color:var(--mute)}
 .form textarea,.form input{display:block;width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);padding:8px 0;margin:6px 0 10px}
 .form textarea{min-height:110px;resize:vertical;border:0;border-left:1px solid var(--line);padding:4px 0 4px 14px}
@@ -73,6 +74,7 @@ dialog p{font-size:14px;margin:12px 0 0}
 <div class="view" id="v-about"><div class="page">
   <div class="now"><span class="mute">right now ·</span> <span id="nowText"></span></div>
   <div id="aboutOut"></div>
+  <div id="songsBox" hidden><h2>on repeat</h2><div id="songs"></div></div>
   <h2>fafo</h2>
   <p class="mute">fucked around. found out. every idea i've tried and dropped.</p>
   <div class="map" id="map"></div>
@@ -148,6 +150,18 @@ dialog p{font-size:14px;margin:12px 0 0}
       l.split(/(https?:\/\/\S+)/).forEach(function(part,i){if(i%2){var a=document.createElement("a");a.href=part;a.target="_blank";a.rel="noopener";a.textContent=part.replace(/^https?:\/\/(www\.)?/,"").replace(/\/$/,"");p.appendChild(a)}else p.appendChild(document.createTextNode(part))});
       out.appendChild(p);
     });
+    /* songs */
+    var sb=$("songs"),songs=lines(S.songs);sb.textContent="";
+    songs.forEach(function(l){
+      var parts=l.split(/\s+[—-]\s+/),url=parts[0],m=url.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(track|album|playlist|episode)\/([A-Za-z0-9]+)/);
+      if(!m)return;
+      var d=document.createElement("div");d.className="song";
+      var f=document.createElement("iframe");f.src="https://open.spotify.com/embed/"+m[1]+"/"+m[2]+"?theme=0";f.loading="lazy";f.title="spotify player";
+      f.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";d.appendChild(f);
+      if(parts[1]){var n=document.createElement("p");n.textContent=parts.slice(1).join(" — ");d.appendChild(n)}
+      sb.appendChild(d);
+    });
+    $("songsBox").hidden=!sb.children.length;
     /* fafo */
     fafo=lines(S.fafo);
     /* requests */
