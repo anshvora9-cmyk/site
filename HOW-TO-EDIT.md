@@ -16,4 +16,10 @@ everything on the site lives in `content.txt`. open it on github, click the penc
 
 ## adding photos
 
-on github, open the `images` folder → "add file" → "upload files". then add a line for it in `content.txt`.
+1. on github, click into the `images` folder first (so the photo lands there).
+2. click "add file" → "upload files", drag the photo in, click "commit changes".
+3. use jpg or png. iphone photos are often .heic, which browsers can't show — on iphone, set settings → camera → formats → "most compatible", or screenshot / export the photo as jpg first.
+4. avoid spaces in the file name (rename `IMG 2041.jpg` to `scooter.jpg`).
+5. open `content.txt`, add a line under `# friends` (or `# elsewhere`), e.g.
+   `images/scooter.jpg | names | caption | 2025-01`
+   names, caption and date are all optional, but keep the `|` dividers.

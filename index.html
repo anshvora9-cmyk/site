@@ -121,7 +121,8 @@ dialog p{font-size:14px;margin:12px 0 0}
   function parse(txt){
     var S={},cur=null;
     txt.replace(/\r/g,"").split("\n").forEach(function(l){
-      var m=l.match(/^#\s+(\w+)\s*$/);if(m){cur=m[1].toLowerCase();S[cur]=[];return}
+      var m=l.match(/^#\s+(right now|now|home|about|songs|fafo|requests|friends|elsewhere|writing)\b[:\s—–-]*(.*)$/i);
+      if(m){cur=m[1].toLowerCase();if(cur==="right now")cur="now";S[cur]=S[cur]||[];if(m[2].trim())S[cur].push(m[2]);return}
       if(cur)S[cur].push(l);
     });
     return S;
@@ -153,12 +154,13 @@ dialog p{font-size:14px;margin:12px 0 0}
     /* songs */
     var sb=$("songs"),songs=lines(S.songs);sb.textContent="";
     songs.forEach(function(l){
-      var parts=l.split(/\s+[—-]\s+/),url=parts[0],m=url.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(track|album|playlist|episode)\/([A-Za-z0-9]+)/);
+      var url=l,m=url.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(track|album|playlist|episode)\/([A-Za-z0-9]+)/);
       if(!m)return;
       var d=document.createElement("div");d.className="song";
       var f=document.createElement("iframe");f.src="https://open.spotify.com/embed/"+m[1]+"/"+m[2]+"?theme=0";f.loading="lazy";f.title="spotify player";
       f.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";d.appendChild(f);
-      if(parts[1]){var n=document.createElement("p");n.textContent=parts.slice(1).join(" — ");d.appendChild(n)}
+      var note=l.replace(/https?:\/\/\S*?open\.spotify\.com\/\S*?\/[A-Za-z0-9]+(\?si=[A-Za-z0-9]+)?/,"").replace(/^[\s—–-]+/,"").trim();
+      if(note){var n=document.createElement("p");n.textContent=note;d.appendChild(n)}
       sb.appendChild(d);
     });
     $("songsBox").hidden=!sb.children.length;

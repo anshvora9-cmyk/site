@@ -43,6 +43,7 @@ pulse
 # requests
 
 # friends
+images/scooter.jpg |  | three on one activa
 
 # elsewhere
 
