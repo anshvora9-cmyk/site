@@ -63,20 +63,20 @@ images/batman.jpg
 
 # shelf
 ## books
-Meditations | Marcus Aurelius | philosophy · stoicism | Private notes a Roman emperor wrote to himself about duty, self-control and accepting what you can't change. Never meant to be published.
-The Diary of a CEO | Steven Bartlett | business · self-improvement | The 33 laws of business and life, drawn from Bartlett's podcast guests and the companies he built.
-Rich Dad Poor Dad | Robert T. Kiyosaki | personal finance | Two father figures, two attitudes to money. Assets vs liabilities, and making money work for you instead of the other way round.
-Building a StoryBrand 2.0 | Donald Miller | marketing · branding | A seven-part framework for clear brand messaging: make the customer the hero and your brand the guide.
-Shoe Dog | Phil Knight | memoir · business | Nike's co-founder on the messy early years, from selling Japanese running shoes out of his car to building Nike.
+Meditations | Marcus Aurelius | philosophy · stoicism | a roman emperor's notes to himself. never meant to be published. still the best advice on keeping your head straight.
+The Diary of a CEO | Steven Bartlett | business · self-improvement | steven bartlett took everything his podcast guests taught him and turned it into 33 laws. easy read.
+Rich Dad Poor Dad | Robert T. Kiyosaki | personal finance | two dads, two very different ideas about money. assets vs liabilities, basically.
+Building a StoryBrand 2.0 | Donald Miller | marketing · branding | how to explain your business so people actually get it. the customer's the hero, not you.
+Shoe Dog | Phil Knight | memoir · business | phil knight selling running shoes out of his car till it became nike. messy, honest, kinda insane.
 ## shows
-Money Heist | La Casa de Papel | crime thriller | A mastermind known as the Professor recruits a crew of outsiders to pull off the biggest heist in Spain's history.
-Suits | USA Network | legal drama | A college dropout with a photographic memory talks his way into a top New York law firm without a law degree.
-Succession | HBO | drama · dark comedy | The Roy family fights over control of their media empire as their father refuses to let go.
-Billions | Showtime | financial drama | A hedge-fund king and a US attorney go to war over money, power and ego in New York.
-3 Body Problem | Netflix | sci-fi | A choice made in 1960s China echoes into the present, as scientists realise humanity may not be alone.
-Black Mirror | Netflix | sci-fi anthology | Standalone stories about technology and the darker side of modern life.
-The Lincoln Lawyer | Netflix | legal drama | Defence attorney Mickey Haller runs his practice from the back seat of a Lincoln.
-Manifest | Netflix | mystery drama | A flight lands after vanishing for five years, though only a few hours have passed for the passengers.
+Money Heist | La Casa de Papel | crime thriller | a guy called the professor and a crew of misfits robbing spain's royal mint. the plans are wild.
+Suits | USA Network | legal drama | a dropout with a photographic memory working at a top law firm with no law degree. harvey specter though.
+Succession | HBO | drama · dark comedy | a rich family fighting over a media empire while the dad refuses to step down. nobody's likeable, can't stop watching.
+Billions | Showtime | financial drama | hedge fund guy vs the attorney trying to take him down. both of them are kinda the villain.
+3 Body Problem | Netflix | sci-fi | scientists start dying, physics stops making sense, and it only gets bigger from there.
+Black Mirror | Netflix | sci-fi anthology | every episode is a different way tech could ruin us. some are too real.
+The Lincoln Lawyer | Netflix | legal drama | a defence lawyer who runs his whole practice from the back of his car.
+Manifest | Netflix | mystery drama | a plane lands five years late but for the passengers it's been a few hours. then it gets weird.
 ## films
 ## music
 ## links
