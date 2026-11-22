@@ -60,3 +60,14 @@ the meaning of life is to understand the context of the past and to create conte
 # likes
 images/fifi.jpg | fifi, my 4lifer
 images/batman.jpg
+
+# shelf
+## books
+meditations | marcus aurelius
+the diary of a ceo | steven bartlett
+building a storybrand 2.0 | donald miller
+rich dad poor dad | robert kiyosaki
+shoe dog | phil knight
+## films
+## music
+## links

@@ -14,6 +14,10 @@ everything on the site lives in `content.txt`. open it on github, click the penc
 - `# elsewhere` — one place per line: `images/file.jpg | place | caption | 2025-06`
 - `# writing` — each entry starts with `## 2026-11-21 21:14 | title` (title optional). the text goes underneath. a blank line makes a new paragraph.
 
+## shelf
+
+- `# shelf` then `## books`, `## films`, `## music`, `## links` (any name works). one item per line: `title | author or artist | why i love it` (the last two are optional). tap a spine on the site to see it. empty rows don't show.
+
 ## things i like
 
 - `# likes`: random images that show up as a collage when you scroll down on the home page. one per line: `images/file.jpg` (optionally ` | a few words`).
