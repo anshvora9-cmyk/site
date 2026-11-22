@@ -56,6 +56,11 @@ body.home .top{position:fixed;left:0;right:0;color:#FFF8EE;text-shadow:0 1px 8px
 .side a{display:block;margin:0 0 14px;font-size:14px}
 .entry{margin:0 0 26px}.entry summary{cursor:pointer}
 .entry p{margin:14px 0 0;white-space:pre-wrap}
+.foot{max-width:640px;margin:0 auto;padding:30px 16px 40px;font-size:12px;color:var(--mute);display:flex;gap:18px;flex-wrap:wrap}
+.foot .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5BD16A;margin-right:6px;vertical-align:1px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.foot .dot{animation:none}}
+body.home .foot{position:fixed;right:max(16px,4vw);bottom:24px;left:auto;margin:0;padding:0;z-index:3;color:#FFF8EE;text-shadow:0 1px 8px rgba(0,0,0,.6)}
 dialog{border:0;padding:0;background:transparent;max-width:min(92vw,760px);color:#F2EDE6}
 dialog::backdrop{background:rgba(0,0,0,.88)}
 dialog img{display:block;max-width:100%;max-height:78vh;margin:0 auto}
@@ -102,6 +107,8 @@ dialog p{font-size:14px;margin:12px 0 0}
   <div class="side"><h1>writing</h1><div id="side"></div></div>
   <div id="entries"></div>
 </div></div>
+
+<footer class="foot" id="foot" hidden><span id="vTotal"></span><span id="vLive"></span></footer>
 
 <dialog id="lb"><img id="lbImg" alt=""><p id="lbCap"></p><p><button type="button" class="link" id="lbClose">close</button></p></dialog>
 
@@ -244,6 +251,29 @@ dialog p{font-size:14px;margin:12px 0 0}
     st.textContent=ok?"copied. paste it in the dm that just opened.":"opening instagram. paste your idea in the dm.";
     window.open("https://ig.me/m/anshhhhh.___","_blank","noopener");
   };
+
+  /* visitor counter (abacus: free, no account) */
+  var NS="anshhhhh-xyz",API="https://abacus.jasoncameron.dev/";
+  function num(u){return fetch(API+u).then(function(r){return r.ok?r.json():{value:0}}).then(function(j){return j.value||0}).catch(function(){return null})}
+  function fmt(n){return n.toLocaleString("en-GB")}
+  (async function(){
+    var counted=false;try{counted=sessionStorage.getItem("counted")==="1"}catch(e){}
+    var total=await num((counted?"get/":"hit/")+NS+"/visits");
+    if(total===null)return;
+    try{sessionStorage.setItem("counted","1")}catch(e){}
+    $("vTotal").textContent=fmt(total)+(total===1?" person has":" people have")+" been here";
+    $("foot").hidden=false;
+    var lastMin=null;
+    async function live(){
+      var m=Math.floor(Date.now()/60000);
+      if(m!==lastMin){lastMin=m;await num("hit/"+NS+"/live-"+m)}
+      var a=await num("get/"+NS+"/live-"+m),b=await num("get/"+NS+"/live-"+(m-1));
+      var n=Math.max(a||0,b||0,1);
+      $("vLive").innerHTML="";var d=document.createElement("span");d.className="dot";$("vLive").appendChild(d);
+      $("vLive").appendChild(document.createTextNode(n+" here right now"));
+    }
+    live();setInterval(live,30000);
+  })();
 
   route();
   fetch("content.txt",{cache:"no-cache"}).then(function(r){return r.text()}).then(function(t){render(parse(t));route()})
