@@ -16,7 +16,7 @@ everything on the site lives in `content.txt`. open it on github, click the penc
 
 ## shelf
 
-- `# shelf` then `## books`, `## films`, `## music`, `## links` (any name works). one item per line: `title | author or artist | why i love it` (the last two are optional). tap a spine on the site to see it. empty rows don't show.
+- `# shelf` then `## books`, `## shows`, `## films`, `## music`, `## links`. one item per line: `Title | author or network | genre | what it's about | my own note` (everything after the title is optional, but keep the `|` dividers in order). covers go in `images/shelf/` named after the title in lowercase with dashes, e.g. `the-diary-of-a-ceo.jpg`. books without a cover get a plain designed cover.
 
 ## things i like
 
