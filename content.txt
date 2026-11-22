@@ -48,6 +48,7 @@ pulse
 images/scooter.jpg |  | doing this since forever lol
 
 # elsewhere
+images/alicante.jpg | alicante, spain | made me feel so liberated. weirdly like home, yet alien in some way. pretty cool place ngl | 2026-08-16
 
 # writing
 ## 2026-11-21 21:14 | meaning of life and others thoughts.
@@ -57,4 +58,5 @@ the meaning of life is to understand the context of the past and to create conte
 ## sun-22/11/2026 | everyday feels the same in a neutral way even.trying to build a routine in the midst of ever changing life situations, kinda excited about the london winters yet despising the cold already lmfao.learning new things like building this on the interweb for now!
 
 # likes
+images/fifi.jpg | fifi, my 4lifer
 images/batman.jpg
