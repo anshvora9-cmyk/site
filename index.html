@@ -147,7 +147,7 @@ dialog p{font-size:14px;margin:12px 0 0}
   <div id="aboutOut"></div>
   <div id="songsBox" hidden><h2>on repeat</h2><div id="songs"></div></div>
   <h2>fafo</h2>
-  <p class="mute">fucked around. found out. every idea i've tried and dropped.</p>
+  <p class="mute">fucked around. found out. things i've built.</p>
   <div class="map" id="map"></div>
   <h2>requested by the internet</h2>
   <p class="mute">things people who landed here think should exist.</p>
@@ -413,7 +413,7 @@ dialog p{font-size:14px;margin:12px 0 0}
       var last=i===n-1,x=document.createElement("span");x.className="x"+(last?" gold":"");x.textContent=last?"?":"✕";x.style.left=pt[0]+"px";x.style.top=pt[1]+"px";x.setAttribute("aria-hidden","true");box.appendChild(x);
       var parts=last?["next"]:fafo[i].split(/\s+[—-]\s+/),st=document.createElement("div"),right=pt[0]<W/2;
       st.className="stop "+(right?"r":"l");st.style.top=(pt[1]-10)+"px";if(right)st.style.left=(pt[0]+20)+"px";else st.style.right=(W-pt[0]+20)+"px";
-      var bb=document.createElement("b");bb.textContent=parts[0];st.appendChild(bb);
+      var bb=document.createElement("b"),md=parts[0].match(/^\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)$/);if(md){var la=document.createElement("a");la.href=md[2];la.target="_blank";la.rel="noopener";la.textContent=md[1];bb.appendChild(la)}else bb.textContent=parts[0];st.appendChild(bb);
       if(parts[1]){var sp=document.createElement("span");sp.textContent=parts.slice(1).join(" — ");st.appendChild(sp)}
       box.appendChild(st);
     });
