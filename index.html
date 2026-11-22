@@ -56,7 +56,7 @@ body.home .top{position:fixed;left:0;right:0;color:#FFF8EE;text-shadow:0 1px 8px
 .side a{display:block;margin:0 0 14px;font-size:14px}
 .entry{margin:0 0 26px}.entry summary{cursor:pointer}
 .entry p{margin:14px 0 0;white-space:pre-wrap}
-.note{margin:0 0 30px}.note time{display:block;font-size:12px;color:var(--mute);margin-bottom:4px}.note p{margin:0 0 8px;white-space:pre-wrap}
+.note{margin:0 0 18px;padding-bottom:18px;border-bottom:1px dotted var(--line)}.note:last-child{border-bottom:0}.note time{font-size:12px;color:var(--mute);margin-right:10px}.note p{display:inline;margin:0;white-space:pre-wrap}.note p+p{display:block;margin-top:6px}
 .foot{max-width:640px;margin:0 auto;padding:30px 16px 40px;font-size:12px;color:var(--mute);display:flex;gap:18px;flex-wrap:wrap}
 .foot .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5BD16A;margin-right:6px;vertical-align:1px;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35}}
@@ -72,7 +72,7 @@ dialog p{font-size:14px;margin:12px 0 0}
 <body>
 <header class="top">
   <a href="#home">ansh</a>
-  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a><a href="#notes" data-v="notes">notes</a></nav>
+  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a><a href="#notes" data-v="notes">musings</a></nav>
 </header>
 
 <div class="view" id="v-home"><div class="hero" id="hero" role="img" aria-label="me as a small boy in a red t-shirt, held by my mum"><button type="button" class="say" id="say"></button></div></div>
@@ -110,8 +110,8 @@ dialog p{font-size:14px;margin:12px 0 0}
 </div></div>
 
 <div class="view" id="v-notes"><div class="page">
-  <h1>notes</h1><p class="mute">small thoughts. half-baked on purpose.</p>
-  <div id="notes" style="margin-top:36px"></div>
+  <h1>on my mind</h1>
+  <div id="notes" style="margin-top:28px"></div>
 </div></div>
 
 <footer class="foot" id="foot" hidden><span id="vTotal"></span><span id="vLive"></span></footer>
@@ -134,8 +134,8 @@ dialog p{font-size:14px;margin:12px 0 0}
   function parse(txt){
     var S={},cur=null;
     txt.replace(/\r/g,"").split("\n").forEach(function(l){
-      var m=l.match(/^#\s+(right now|now|home|about|songs|fafo|requests|friends|elsewhere|writing|notes)\b[:\s—–-]*(.*)$/i);
-      if(m){cur=m[1].toLowerCase();if(cur==="right now")cur="now";S[cur]=S[cur]||[];if(m[2].trim())S[cur].push(m[2]);return}
+      var m=l.match(/^#\s+(right now|now|home|about|songs|fafo|requests|friends|elsewhere|writing|notes|musings)\b[:\s—–-]*(.*)$/i);
+      if(m){cur=m[1].toLowerCase();if(cur==="right now")cur="now";if(cur==="musings")cur="notes";S[cur]=S[cur]||[];if(m[2].trim())S[cur].push(m[2]);return}
       if(cur)S[cur].push(l);
     });
     return S;
@@ -231,16 +231,20 @@ dialog p{font-size:14px;margin:12px 0 0}
     $("streak").textContent=es.length?(es.length+(es.length===1?" day":" days")+" of writing so far."):"";
   }
 
+  function pd(x){x=(x||"").trim().replace(/^[a-z]+[\s,-]+/i,"");
+    var m=x.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})(?:\s+(\d{1,2}):(\d{2}))?/);
+    if(m){var y=+m[3];if(y<100)y+=2000;return new Date(y,m[2]-1,+m[1],+(m[4]||12),+(m[5]||0))}
+    var d=new Date(x.replace(" ","T"));return isNaN(d)?null:d}
   function notes(raw){
     var ns=[],cur=null;
     raw.forEach(function(l){var m=l.match(/^##\s*(.+)$/);
-      if(m){var d=new Date(m[1].split("|")[0].trim().replace(" ","T"));cur={d:isNaN(d)?null:d,raw:m[1].trim(),body:[]};ns.push(cur);return}
+      if(m){var hd=m[1].split("|"),d=pd(hd[0]);cur={d:d,raw:hd[0].trim(),body:[]};if(!d&&hd.length===1){cur.body.push(m[1])}if(hd.length>1)cur.body.push(hd.slice(1).join("|").trim());ns.push(cur);return}
       if(cur)cur.body.push(l)});
     ns.sort(function(a,b){return (b.d||0)-(a.d||0)});
     var box=$("notes");box.textContent="";
     if(!ns.length){var z=document.createElement("p");z.className="mute";z.textContent="nothing yet.";box.appendChild(z);return}
     ns.forEach(function(n){var w=document.createElement("div");w.className="note";
-      var t=document.createElement("time");t.textContent=n.d?n.d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}).toLowerCase()+", "+stamp(n.d).split(", ")[1]:n.raw;w.appendChild(t);
+      var t=document.createElement("time");t.textContent=n.d?n.d.toLocaleDateString("en-GB",{day:"numeric",month:"short"}).toLowerCase()+(n.d.getFullYear()!==new Date().getFullYear()?" "+n.d.getFullYear():""):n.raw;w.appendChild(t);
       n.body.join("\n").trim().split(/\n\s*\n/).forEach(function(x){if(!x.trim())return;var p=document.createElement("p");p.textContent=x.trim();w.appendChild(p)});
       box.appendChild(w)});
   }
