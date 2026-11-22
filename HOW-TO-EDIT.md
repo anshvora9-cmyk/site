@@ -7,7 +7,7 @@ everything on the site lives in `content.txt`. open it on github, click the penc
 - `# now` — the one line in the "right now" box.
 - `# home` — `photo: images/...` then the lines that show under the photo (one per line).
 - `# about` — one line = one paragraph. `## heading` makes a heading. `linkedin <url>` / `instagram <url>` become icons.
-- `# songs` — songs on repeat. one per line: paste the spotify share link, then optionally ` — a note`. e.g. `https://open.spotify.com/track/abc123 — 3am walks home`. the section hides itself when empty.
+- `# songs` — songs section. whatever you write after `# songs` becomes the heading (e.g. `# songs i've been listening`). one per line: paste the spotify share link, then optionally ` — a note`. e.g. `https://open.spotify.com/track/abc123 — 3am walks home`. the section hides itself when empty.
 - `# fafo` — one idea per line: `name — note` (note is optional).
 - `# requests` — ideas people sent me: `idea — from name` (from is optional).
 - `# friends` — one photo per line: `images/file.jpg | who | caption | 2025-06`

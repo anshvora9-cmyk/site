@@ -140,7 +140,9 @@ dialog p{font-size:14px;margin:12px 0 0}
     var S={},cur=null;
     txt.replace(/\r/g,"").split("\n").forEach(function(l){
       var m=l.match(/^#\s+(right now|now|home|about|songs|fafo|requests|friends|elsewhere|writing|notes|musings|likes)\b[:\s—–-]*(.*)$/i);
-      if(m){cur=m[1].toLowerCase();if(cur==="right now")cur="now";if(cur==="musings")cur="notes";S[cur]=S[cur]||[];if(m[2].trim())S[cur].push(m[2]);return}
+      if(m){cur=m[1].toLowerCase();if(cur==="right now")cur="now";if(cur==="musings")cur="notes";S[cur]=S[cur]||[];
+        if(cur==="songs"){S._songsTitle=l.replace(/^#\s+/,"").trim();return}
+        if(m[2].trim())S[cur].push(m[2]);return}
       if(cur)S[cur].push(l);
     });
     return S;
@@ -182,6 +184,7 @@ dialog p{font-size:14px;margin:12px 0 0}
       sb.appendChild(d);
     });
     $("songsBox").hidden=!sb.children.length;
+    $("songsBox").querySelector("h2").textContent=(S._songsTitle&&S._songsTitle.toLowerCase()!=="songs")?S._songsTitle:"on repeat";
     /* fafo */
     fafo=lines(S.fafo);
     /* requests */
