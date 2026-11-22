@@ -329,7 +329,7 @@ dialog p{font-size:14px;margin:12px 0 0}
     groups.forEach(function(g){var face=/show|film|movie|series/.test(g.name);g.items.forEach(function(it,idx){
       var c=it.split("|").map(function(x){return x.trim()});
       var info=c.length>=4?{t:c[0],by:c[1],genre:c[2],about:c[3],note:c[4]||""}:{t:c[0],by:c[1]||"",genre:"",about:"",note:c[2]||""};
-      info.kind=g.name.replace(/s$/,"");info.face=face;info.flat=!face&&g.items.length>=5&&idx>=g.items.length-2;SHELF.push(info)})});
+      info.kind=g.name.replace(/s$/,"");info.face=face;info.flat=!face&&g.items.length>=6&&idx>=g.items.length-2;SHELF.push(info)})});
     var sb=document.querySelector('nav a[data-v="shelf"]');if(sb)sb.hidden=!SHELF.length;
     layoutShelf();
   }
