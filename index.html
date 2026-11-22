@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ansh</title>
+<meta name="description" content="ansh's corner of the internet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root{--bg:#000;--ink:#fff;--mute:#9a9a9a;--line:#333;--f:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.7}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{opacity:.7}
+button,textarea,input{font:inherit;color:inherit}
+:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:22px max(16px,4vw);position:relative;z-index:3}
+.top a{text-decoration:none;font-size:14px}
+.top nav a{margin-left:22px}
+.top nav a[aria-current="page"]{text-decoration:underline}
+.view{display:none}.view.on{display:block}
+.page{max-width:640px;margin:70px auto 120px;padding:0 16px}
+h1{font-weight:500;font-size:17px;margin:0 0 20px}
+h2{font-weight:500;font-size:15px;margin:44px 0 12px}
+p{margin:0 0 10px}
+.mute{color:var(--mute)}
+body.home .top{position:fixed;left:0;right:0;color:#FFF8EE;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.hero{position:fixed;inset:0;background:#2a1a12 center 12%/cover no-repeat}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 65%,rgba(0,0,0,.45))}
+.say{position:absolute;left:max(16px,4vw);bottom:28px;z-index:2;color:#FFF8EE;font-size:14px;text-shadow:0 1px 8px rgba(0,0,0,.6);background:none;border:0;padding:0;cursor:pointer;font-style:italic;text-align:left}
+.now{border:1px dashed var(--line);padding:12px 16px;margin:0 0 34px;font-size:14px}
+.icons{display:flex;gap:18px;align-items:center}.icons a{display:inline-flex}
+.map{position:relative;margin:26px 0 20px}
+.map svg{position:absolute;inset:0;overflow:visible}
+.map .stop{position:absolute;font-size:13px;line-height:1.35;width:46%}
+.map .stop b{font-weight:500;display:block;font-size:14px}
+.map .stop span{color:var(--mute)}
+.map .stop.l{text-align:right}
+.map .x{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;display:grid;place-items:center;font-size:15px;color:var(--mute)}
+.map .x.gold{color:#E8B64C;font-size:20px}
+.reqs{padding-left:22px;margin:20px 0 10px}.reqs li{margin:0 0 10px}.reqs li span{color:var(--mute)}
+.form textarea,.form input{display:block;width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);padding:8px 0;margin:6px 0 10px}
+.form textarea{min-height:110px;resize:vertical;border:0;border-left:1px solid var(--line);padding:4px 0 4px 14px}
+.form textarea:focus,.form input:focus{outline:none;border-color:var(--ink)}
+.link{background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.status{color:var(--mute);font-size:14px;margin-left:14px}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:26px 22px;margin:30px 0}
+.photos figure{margin:0}
+.photos button{all:unset;cursor:pointer;display:block}
+.photos img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--line)}
+.photos figcaption{font-size:13px;margin-top:8px;line-height:1.4}
+.photos figcaption span{color:var(--mute);display:block}
+.jr{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:56px;max-width:900px;margin:70px auto 120px;padding:0 16px}
+.side a{display:block;margin:0 0 14px;font-size:14px}
+.entry{margin:0 0 26px}.entry summary{cursor:pointer}
+.entry p{margin:14px 0 0;white-space:pre-wrap}
+dialog{border:0;padding:0;background:transparent;max-width:min(92vw,760px);color:#F2EDE6}
+dialog::backdrop{background:rgba(0,0,0,.88)}
+dialog img{display:block;max-width:100%;max-height:78vh;margin:0 auto}
+dialog p{font-size:14px;margin:12px 0 0}
+@media (max-width:640px){.jr{grid-template-columns:1fr;gap:10px;margin-top:40px}.side{order:2;margin-top:30px}.top nav a{margin-left:12px}.page{margin-top:40px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="#home">ansh</a>
+  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a></nav>
+</header>
+
+<div class="view" id="v-home"><div class="hero" id="hero" role="img" aria-label="me as a small boy in a red t-shirt, held by my mum"><button type="button" class="say" id="say"></button></div></div>
+
+<div class="view" id="v-about"><div class="page">
+  <div class="now"><span class="mute">right now ·</span> <span id="nowText"></span></div>
+  <div id="aboutOut"></div>
+  <h2>fafo</h2>
+  <p class="mute">fucked around. found out. every idea i've tried and dropped.</p>
+  <div class="map" id="map"></div>
+  <h2>requested by the internet</h2>
+  <p class="mute">things people who landed here think should exist.</p>
+  <ol class="reqs" id="reqs"></ol>
+  <p class="mute" id="noReqs">nothing yet. be the first.</p>
+  <div class="form"><textarea id="ideaText" placeholder="what should exist that doesn't yet?" aria-label="your idea"></textarea>
+    <input id="ideaFrom" placeholder="your name (optional)" aria-label="your name">
+    <button type="button" class="link" id="ideaSend">send it to me</button><span class="status" id="ideaStatus"></span></div>
+  <p class="mute" id="streak" style="margin-top:40px"></p>
+</div></div>
+
+<div class="view" id="v-friends"><div class="page" style="max-width:860px">
+  <h1>friends</h1><p>the people who made me who i am. a few moments with them.</p>
+  <div class="photos" id="friends"></div><p class="mute" id="noFriends">no photos yet.</p>
+</div></div>
+
+<div class="view" id="v-elsewhere"><div class="page" style="max-width:860px">
+  <h1>elsewhere</h1><p>places i've been, and what they did to me.</p>
+  <div class="photos" id="places"></div><p class="mute" id="noPlaces">nowhere yet.</p>
+</div></div>
+
+<div class="view" id="v-writing"><div class="jr">
+  <div class="side"><h1>writing</h1><div id="side"></div></div>
+  <div id="entries"></div>
+</div></div>
+
+<dialog id="lb"><img id="lbImg" alt=""><p id="lbCap"></p><p><button type="button" class="link" id="lbClose">close</button></p></dialog>
+
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  function route(){
+    var v=(location.hash||"#home").slice(1);if(!$("v-"+v))v="home";
+    document.querySelectorAll(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+v)});
+    document.querySelectorAll("nav a").forEach(function(a){a.dataset.v===v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
+    document.body.classList.toggle("home",v==="home");window.scrollTo(0,0);
+    if(v==="about")setTimeout(drawMap,0);
+  }
+  window.addEventListener("hashchange",route);
+
+  /* parse content.txt into sections */
+  function parse(txt){
+    var S={},cur=null;
+    txt.replace(/\r/g,"").split("\n").forEach(function(l){
+      var m=l.match(/^#\s+(\w+)\s*$/);if(m){cur=m[1].toLowerCase();S[cur]=[];return}
+      if(cur)S[cur].push(l);
+    });
+    return S;
+  }
+  function lines(a){return (a||[]).map(function(x){return x.trim()}).filter(Boolean)}
+  var ICONS={linkedin:'<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M4 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM2.5 8.5h3V21h-3zM9 8.5h2.9v1.7h.04c.4-.76 1.38-1.56 2.85-1.56 3.05 0 3.61 2 3.61 4.6V21h-3v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H9z"/></svg>',instagram:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>'};
+  var fafo=[];
+
+  function render(S){
+    /* home */
+    var h=lines(S.home),photo="images/home.jpg",says=[];
+    h.forEach(function(l){var m=l.match(/^photo:\s*(.+)$/i);if(m)photo=m[1].trim();else says.push(l)});
+    $("hero").style.backgroundImage="url('"+photo+"')";
+    var si=0;$("say").textContent=says[0]||"";$("say").onclick=function(){if(!says.length)return;si=(si+1)%says.length;this.textContent=says[si]};
+    /* now */
+    $("nowText").textContent=lines(S.now).join(" ");
+    /* about */
+    var out=$("aboutOut"),row=null;out.textContent="";
+    lines(S.about).forEach(function(l){
+      var ic=l.match(/^(linkedin|instagram)\s+(https?:\/\/\S+)$/i);
+      if(ic){if(!row){row=document.createElement("p");row.className="icons";out.appendChild(row)}
+        var a=document.createElement("a");a.href=ic[2];a.target="_blank";a.rel="noopener";a.setAttribute("aria-label",ic[1].toLowerCase());a.innerHTML=ICONS[ic[1].toLowerCase()];row.appendChild(a);return}
+      row=null;
+      if(/^##\s*/.test(l)){var h2=document.createElement("h2");h2.textContent=l.replace(/^##\s*/,"");out.appendChild(h2);return}
+      var p=document.createElement("p");
+      l.split(/(https?:\/\/\S+)/).forEach(function(part,i){if(i%2){var a=document.createElement("a");a.href=part;a.target="_blank";a.rel="noopener";a.textContent=part.replace(/^https?:\/\/(www\.)?/,"").replace(/\/$/,"");p.appendChild(a)}else p.appendChild(document.createTextNode(part))});
+      out.appendChild(p);
+    });
+    /* fafo */
+    fafo=lines(S.fafo);
+    /* requests */
+    var ol=$("reqs"),reqs=lines(S.requests);ol.textContent="";
+    reqs.forEach(function(r){var li=document.createElement("li"),p=r.split(/\s+[—-]\s+from\s+/i);li.textContent=p[0];if(p[1]){var sp=document.createElement("span");sp.textContent=" — from "+p[1];li.appendChild(sp)}ol.appendChild(li)});
+    $("noReqs").hidden=reqs.length>0;
+    /* photos */
+    gallery("friends",lines(S.friends),"noFriends");
+    gallery("places",lines(S.elsewhere),"noPlaces");
+    /* writing */
+    writing(S.writing||[]);
+  }
+
+  function gallery(id,rows,emptyId){
+    var g=$(id);g.textContent="";
+    rows.forEach(function(r){
+      var c=r.split("|").map(function(x){return x.trim()});if(!c[0])return;
+      var f=document.createElement("figure"),b=document.createElement("button"),img=document.createElement("img"),cap=document.createElement("figcaption");
+      b.type="button";img.src=c[0];img.alt=c[2]||c[1]||"photo";img.loading="lazy";
+      cap.textContent=c[2]||"";
+      var when="";if(c[3]){var d=new Date(c[3]+(c[3].length<=7?"-15":"")+"T12:00");if(!isNaN(d))when=d.toLocaleDateString("en-US",{month:"short",year:"numeric"}).toLowerCase()}
+      var meta=[c[1],when].filter(Boolean).join(" · ");if(meta){var sp=document.createElement("span");sp.textContent=meta;cap.appendChild(sp)}
+      b.onclick=function(){$("lbImg").src=c[0];$("lbImg").alt=img.alt;$("lbCap").textContent=[c[2],meta].filter(Boolean).join(" — ");$("lb").showModal()};
+      b.appendChild(img);f.appendChild(b);f.appendChild(cap);g.appendChild(f);
+    });
+    $(emptyId).hidden=g.children.length>0;
+  }
+  $("lbClose").onclick=function(){$("lb").close()};
+  $("lb").addEventListener("click",function(e){if(e.target===$("lb"))$("lb").close()});
+
+  function stamp(d){var h=d.getHours(),m=d.getMinutes();return (d.getMonth()+1)+"/"+d.getDate()+"/"+String(d.getFullYear()).slice(2)+", "+((h%12)||12)+":"+(m<10?"0":"")+m+(h<12?"am":"pm")}
+  function writing(raw){
+    var es=[],cur=null;
+    raw.forEach(function(l){
+      var m=l.match(/^##\s*(.+)$/);
+      if(m){var parts=m[1].split("|"),d=new Date(parts[0].trim().replace(" ","T"));cur={d:isNaN(d)?null:d,raw:parts[0].trim(),title:(parts[1]||"").trim(),body:[]};es.push(cur);return}
+      if(cur)cur.body.push(l);
+    });
+    es.sort(function(a,b){return (b.d||0)-(a.d||0)});
+    var box=$("entries"),side=$("side");box.textContent="";side.textContent="";
+    if(!es.length){var z=document.createElement("p");z.className="mute";z.textContent="nothing here yet.";box.appendChild(z)}
+    es.forEach(function(e,i){
+      var det=document.createElement("details");det.className="entry";if(i<3)det.open=true;
+      var s=document.createElement("summary");s.textContent=(e.d?stamp(e.d):e.raw)+(e.title?" "+e.title:"");det.appendChild(s);
+      e.body.join("\n").trim().split(/\n\s*\n/).forEach(function(t){if(!t.trim())return;var p=document.createElement("p");p.textContent=t.trim();det.appendChild(p)});
+      box.appendChild(det);
+      var a=document.createElement("a");a.href="#writing";var first=(e.body.join(" ").trim()).slice(0,28);
+      a.textContent=(e.title||first)+(e.d?" ("+e.d.toLocaleDateString("en-US",{month:"short",day:"numeric"}).toLowerCase()+")":"");
+      a.onclick=function(ev){ev.preventDefault();det.open=true;det.scrollIntoView({behavior:"smooth"})};side.appendChild(a);
+    });
+    $("streak").textContent=es.length?(es.length+(es.length===1?" day":" days")+" of writing so far."):"";
+  }
+
+  function drawMap(){
+    var box=$("map");if(!box.offsetParent)return;box.textContent="";
+    var W=box.clientWidth||600,RH=86,n=fafo.length+1,H=n*RH+20;box.style.height=H+"px";
+    var pts=[];for(var i=0;i<n;i++)pts.push([W/2+W*0.2*Math.sin(i*1.15),20+i*RH]);
+    var ns="http://www.w3.org/2000/svg",svg=document.createElementNS(ns,"svg"),path=document.createElementNS(ns,"path");
+    svg.setAttribute("width",W);svg.setAttribute("height",H);
+    var d="M"+pts[0][0]+" "+pts[0][1];for(var k=1;k<n;k++){var a=pts[k-1],b=pts[k];d+=" C"+a[0]+" "+(a[1]+RH/2)+" "+b[0]+" "+(b[1]-RH/2)+" "+b[0]+" "+b[1]}
+    path.setAttribute("d",d);path.setAttribute("fill","none");path.setAttribute("stroke","currentColor");path.setAttribute("stroke-width","1.2");path.setAttribute("stroke-dasharray","3 6");path.setAttribute("opacity",".55");
+    svg.appendChild(path);box.appendChild(svg);
+    pts.forEach(function(pt,i){
+      var last=i===n-1,x=document.createElement("span");x.className="x"+(last?" gold":"");x.textContent=last?"?":"✕";x.style.left=pt[0]+"px";x.style.top=pt[1]+"px";x.setAttribute("aria-hidden","true");box.appendChild(x);
+      var parts=last?["next"]:fafo[i].split(/\s+[—-]\s+/),st=document.createElement("div"),right=pt[0]<W/2;
+      st.className="stop "+(right?"r":"l");st.style.top=(pt[1]-10)+"px";if(right)st.style.left=(pt[0]+20)+"px";else st.style.right=(W-pt[0]+20)+"px";
+      var bb=document.createElement("b");bb.textContent=parts[0];st.appendChild(bb);
+      if(parts[1]){var sp=document.createElement("span");sp.textContent=parts.slice(1).join(" — ");st.appendChild(sp)}
+      box.appendChild(st);
+    });
+  }
+  window.addEventListener("resize",drawMap);
+
+  $("ideaSend").onclick=async function(){
+    var t=$("ideaText").value.trim(),st=$("ideaStatus");if(!t){st.textContent="write your idea first.";return}
+    var fr=$("ideaFrom").value.trim(),msg="idea for you to build: "+t+(fr?" — from "+fr:""),ok=false;
+    try{await navigator.clipboard.writeText(msg);ok=true}catch(e){}
+    st.textContent=ok?"copied. paste it in the dm that just opened.":"opening instagram. paste your idea in the dm.";
+    window.open("https://ig.me/m/anshhhhh.___","_blank","noopener");
+  };
+
+  route();
+  fetch("content.txt",{cache:"no-cache"}).then(function(r){return r.text()}).then(function(t){render(parse(t));route()})
+    .catch(function(){$("nowText").textContent="couldn't load. refresh?"});
+})();
+</script>
+</body>
+</html>
