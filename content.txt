@@ -65,8 +65,8 @@ images/batman.jpg
 ## books
 Meditations | Marcus Aurelius | philosophy · stoicism | Private notes a Roman emperor wrote to himself about duty, self-control and accepting what you can't change. Never meant to be published.
 The Diary of a CEO | Steven Bartlett | business · self-improvement | The 33 laws of business and life, drawn from Bartlett's podcast guests and the companies he built.
-Building a StoryBrand 2.0 | Donald Miller | marketing · branding | A seven-part framework for clear brand messaging: make the customer the hero and your brand the guide.
 Rich Dad Poor Dad | Robert T. Kiyosaki | personal finance | Two father figures, two attitudes to money. Assets vs liabilities, and making money work for you instead of the other way round.
+Building a StoryBrand 2.0 | Donald Miller | marketing · branding | A seven-part framework for clear brand messaging: make the customer the hero and your brand the guide.
 Shoe Dog | Phil Knight | memoir · business | Nike's co-founder on the messy early years, from selling Japanese running shoes out of his car to building Nike.
 ## shows
 Money Heist | La Casa de Papel | crime thriller | A mastermind known as the Professor recruits a crew of outsiders to pull off the biggest heist in Spain's history.
