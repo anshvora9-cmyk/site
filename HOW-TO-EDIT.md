@@ -14,6 +14,11 @@ everything on the site lives in `content.txt`. open it on github, click the penc
 - `# elsewhere` — one place per line: `images/file.jpg | place | caption | 2025-06`
 - `# writing` — each entry starts with `## 2026-11-21 21:14 | title` (title optional). the text goes underneath. a blank line makes a new paragraph.
 
+## notes vs writing
+
+- `# writing`: blogs and serious pieces. each starts with `## 2026-11-21 21:14 | title`.
+- `# notes`: quick casual thoughts. each starts with `## 2026-11-22 21:14` (no title), text underneath. newest shows first.
+
 ## adding photos
 
 1. on github, click into the `images` folder first (so the photo lands there).

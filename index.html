@@ -56,6 +56,7 @@ body.home .top{position:fixed;left:0;right:0;color:#FFF8EE;text-shadow:0 1px 8px
 .side a{display:block;margin:0 0 14px;font-size:14px}
 .entry{margin:0 0 26px}.entry summary{cursor:pointer}
 .entry p{margin:14px 0 0;white-space:pre-wrap}
+.note{margin:0 0 30px}.note time{display:block;font-size:12px;color:var(--mute);margin-bottom:4px}.note p{margin:0 0 8px;white-space:pre-wrap}
 .foot{max-width:640px;margin:0 auto;padding:30px 16px 40px;font-size:12px;color:var(--mute);display:flex;gap:18px;flex-wrap:wrap}
 .foot .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5BD16A;margin-right:6px;vertical-align:1px;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35}}
@@ -65,13 +66,13 @@ dialog{border:0;padding:0;background:transparent;max-width:min(92vw,760px);color
 dialog::backdrop{background:rgba(0,0,0,.88)}
 dialog img{display:block;max-width:100%;max-height:78vh;margin:0 auto}
 dialog p{font-size:14px;margin:12px 0 0}
-@media (max-width:640px){.jr{grid-template-columns:1fr;gap:10px;margin-top:40px}.side{order:2;margin-top:30px}.top nav a{margin-left:12px}.page{margin-top:40px}}
+@media (max-width:640px){.jr{grid-template-columns:1fr;gap:10px;margin-top:40px}.side{order:2;margin-top:30px}.top nav a{margin-left:10px;font-size:13px}.page{margin-top:40px}}
 </style>
 </head>
 <body>
 <header class="top">
   <a href="#home">ansh</a>
-  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a></nav>
+  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a><a href="#notes" data-v="notes">notes</a></nav>
 </header>
 
 <div class="view" id="v-home"><div class="hero" id="hero" role="img" aria-label="me as a small boy in a red t-shirt, held by my mum"><button type="button" class="say" id="say"></button></div></div>
@@ -108,6 +109,11 @@ dialog p{font-size:14px;margin:12px 0 0}
   <div id="entries"></div>
 </div></div>
 
+<div class="view" id="v-notes"><div class="page">
+  <h1>notes</h1><p class="mute">small thoughts. half-baked on purpose.</p>
+  <div id="notes" style="margin-top:36px"></div>
+</div></div>
+
 <footer class="foot" id="foot" hidden><span id="vTotal"></span><span id="vLive"></span></footer>
 
 <dialog id="lb"><img id="lbImg" alt=""><p id="lbCap"></p><p><button type="button" class="link" id="lbClose">close</button></p></dialog>
@@ -128,7 +134,7 @@ dialog p{font-size:14px;margin:12px 0 0}
   function parse(txt){
     var S={},cur=null;
     txt.replace(/\r/g,"").split("\n").forEach(function(l){
-      var m=l.match(/^#\s+(right now|now|home|about|songs|fafo|requests|friends|elsewhere|writing)\b[:\s—–-]*(.*)$/i);
+      var m=l.match(/^#\s+(right now|now|home|about|songs|fafo|requests|friends|elsewhere|writing|notes)\b[:\s—–-]*(.*)$/i);
       if(m){cur=m[1].toLowerCase();if(cur==="right now")cur="now";S[cur]=S[cur]||[];if(m[2].trim())S[cur].push(m[2]);return}
       if(cur)S[cur].push(l);
     });
@@ -182,6 +188,7 @@ dialog p{font-size:14px;margin:12px 0 0}
     gallery("places",lines(S.elsewhere),"noPlaces");
     /* writing */
     writing(S.writing||[]);
+    notes(S.notes||[]);
   }
 
   function gallery(id,rows,emptyId){
@@ -224,6 +231,19 @@ dialog p{font-size:14px;margin:12px 0 0}
     $("streak").textContent=es.length?(es.length+(es.length===1?" day":" days")+" of writing so far."):"";
   }
 
+  function notes(raw){
+    var ns=[],cur=null;
+    raw.forEach(function(l){var m=l.match(/^##\s*(.+)$/);
+      if(m){var d=new Date(m[1].split("|")[0].trim().replace(" ","T"));cur={d:isNaN(d)?null:d,raw:m[1].trim(),body:[]};ns.push(cur);return}
+      if(cur)cur.body.push(l)});
+    ns.sort(function(a,b){return (b.d||0)-(a.d||0)});
+    var box=$("notes");box.textContent="";
+    if(!ns.length){var z=document.createElement("p");z.className="mute";z.textContent="nothing yet.";box.appendChild(z);return}
+    ns.forEach(function(n){var w=document.createElement("div");w.className="note";
+      var t=document.createElement("time");t.textContent=n.d?n.d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}).toLowerCase()+", "+stamp(n.d).split(", ")[1]:n.raw;w.appendChild(t);
+      n.body.join("\n").trim().split(/\n\s*\n/).forEach(function(x){if(!x.trim())return;var p=document.createElement("p");p.textContent=x.trim();w.appendChild(p)});
+      box.appendChild(w)});
+  }
   function drawMap(){
     var box=$("map");if(!box.offsetParent)return;box.textContent="";
     var W=box.clientWidth||600,RH=86,n=fafo.length+1,H=n*RH+20;box.style.height=H+"px";
