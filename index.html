@@ -18,9 +18,7 @@ button,textarea,input{font:inherit;color:inherit}
 .top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px max(16px,4vw);position:relative;z-index:3}
 .top a{text-decoration:none;font-size:14px}
 .brand{display:inline-flex;align-items:center;gap:7px}
-.sig{overflow:visible}.sig .disc{fill:#F3E7B0;filter:drop-shadow(0 0 3px rgba(243,231,176,.9)) drop-shadow(0 0 9px rgba(243,231,176,.55));animation:glow 3.2s ease-in-out infinite}
-.sig .bat{fill:#0d0d0d}
-@keyframes glow{0%,100%{opacity:1}50%{opacity:.72}}
+
 .top nav a{margin-left:22px}
 .top nav a[aria-current="page"]{text-decoration:underline}
 .view{display:none}.view.on{display:block}
@@ -64,8 +62,8 @@ body.home .top{position:fixed;left:0;right:0;color:#FFF8EE;text-shadow:0 1px 8px
 .foot{max-width:640px;margin:0 auto;padding:30px 16px 40px;font-size:12px;color:var(--mute);display:flex;gap:18px;flex-wrap:wrap}
 .foot .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5BD16A;margin-right:6px;vertical-align:1px;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35}}
-@media (prefers-reduced-motion:reduce){.foot .dot,.sig .disc{animation:none}}
-.likes{max-width:900px;margin:90px auto 40px;padding:0 16px}.likes h2{margin:0 0 22px}
+@media (prefers-reduced-motion:reduce){.foot .dot{animation:none}}
+.likes{max-width:900px;margin:90px auto 40px;padding:0 16px}.likes+.likes{margin-top:50px}.likes h2{margin:0 0 22px}
 .board{columns:3 220px;column-gap:18px}
 .board button{all:unset;cursor:pointer;display:block;break-inside:avoid;margin:0 0 18px}
 .board img{display:block;width:100%;height:auto;border-radius:4px}
@@ -80,11 +78,12 @@ dialog p{font-size:14px;margin:12px 0 0}
 </head>
 <body>
 <header class="top">
-  <a href="#home" class="brand"><svg class="sig" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><ellipse class="disc" cx="12" cy="12" rx="11" ry="8"/><path class="bat" d="M12 7.6c.5.9 1 1.3 1.6 1.3.5 0 .8-.5.9-1.1 1.6.4 3 1.1 4.1 2-1 .1-1.6.7-1.6 1.6-.9-.5-1.9-.4-2.4.4-.6.4-.9 1.1-1 2-.5-.7-1-1.1-1.6-1.3-.6.2-1.1.6-1.6 1.3-.1-.9-.4-1.6-1-2-.5-.8-1.5-.9-2.4-.4 0-.9-.6-1.5-1.6-1.6 1.1-.9 2.5-1.6 4.1-2 .1.6.4 1.1.9 1.1.6 0 1.1-.4 1.6-1.3z"/></svg>ansh</a>
-  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a><a href="#notes" data-v="notes">musings</a></nav>
+  <a href="#home" class="brand">ansh</a>
+  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a></nav>
 </header>
 
 <div class="view" id="v-home"><div class="hero" id="hero" role="img" aria-label="me as a small boy in a red t-shirt, held by my mum"><button type="button" class="say" id="say"></button></div>
+  <section class="likes" id="musingsBox" hidden><h2>musings</h2><div id="notes"></div></section>
   <section class="likes" id="likesBox" hidden><h2>things i like</h2><div class="board" id="likes"></div></section>
 </div>
 
@@ -98,7 +97,7 @@ dialog p{font-size:14px;margin:12px 0 0}
   <h2>requested by the internet</h2>
   <p class="mute">things people who landed here think should exist.</p>
   <ol class="reqs" id="reqs"></ol>
-  <p class="mute" id="noReqs">nothing yet. be the first.</p>
+  <span id="noReqs" hidden></span>
   <div class="form"><textarea id="ideaText" placeholder="what should exist that doesn't yet?" aria-label="your idea"></textarea>
     <input id="ideaFrom" placeholder="your name (optional)" aria-label="your name">
     <button type="button" class="link" id="ideaSend">send it to me</button><span class="status" id="ideaStatus"></span></div>
@@ -107,22 +106,17 @@ dialog p{font-size:14px;margin:12px 0 0}
 
 <div class="view" id="v-friends"><div class="page" style="max-width:860px">
   <h1>friends</h1><p>the people who made me who i am. a few moments with them.</p>
-  <div class="photos" id="friends"></div><p class="mute" id="noFriends">no photos yet.</p>
+  <div class="photos" id="friends"></div><span id="noFriends" hidden></span>
 </div></div>
 
 <div class="view" id="v-elsewhere"><div class="page" style="max-width:860px">
   <h1>elsewhere</h1><p>places i've been, and what they did to me.</p>
-  <div class="photos" id="places"></div><p class="mute" id="noPlaces">nowhere yet.</p>
+  <div class="photos" id="places"></div><span id="noPlaces" hidden></span>
 </div></div>
 
 <div class="view" id="v-writing"><div class="jr">
   <div class="side"><h1>writing</h1><div id="side"></div></div>
   <div id="entries"></div>
-</div></div>
-
-<div class="view" id="v-notes"><div class="page">
-  <h1>on my mind</h1>
-  <div id="notes" style="margin-top:28px"></div>
 </div></div>
 
 <footer class="foot" id="foot" hidden><span id="vTotal"></span><span id="vLive"></span></footer>
@@ -133,7 +127,7 @@ dialog p{font-size:14px;margin:12px 0 0}
 (function(){
   var $=function(i){return document.getElementById(i)};
   function route(){
-    var v=(location.hash||"#home").slice(1);if(!$("v-"+v))v="home";
+    var v=(location.hash||"#home").slice(1);if(v==="notes"||v==="musings")v="home";if(!$("v-"+v))v="home";
     document.querySelectorAll(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+v)});
     document.querySelectorAll("nav a").forEach(function(a){a.dataset.v===v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
     document.body.classList.toggle("home",v==="home");window.scrollTo(0,0);
@@ -193,7 +187,7 @@ dialog p{font-size:14px;margin:12px 0 0}
     /* requests */
     var ol=$("reqs"),reqs=lines(S.requests);ol.textContent="";
     reqs.forEach(function(r){var li=document.createElement("li"),p=r.split(/\s+[—-]\s+from\s+/i);li.textContent=p[0];if(p[1]){var sp=document.createElement("span");sp.textContent=" — from "+p[1];li.appendChild(sp)}ol.appendChild(li)});
-    $("noReqs").hidden=reqs.length>0;
+    
     /* photos */
     var lb=$("likes");lb.textContent="";
     lines(S.likes).forEach(function(r){var c=r.split("|").map(function(x){return x.trim()});if(!c[0])return;
@@ -220,7 +214,6 @@ dialog p{font-size:14px;margin:12px 0 0}
       b.onclick=function(){$("lbImg").src=c[0];$("lbImg").alt=img.alt;$("lbCap").textContent=[c[2],meta].filter(Boolean).join(" — ");$("lb").showModal()};
       b.appendChild(img);f.appendChild(b);f.appendChild(cap);g.appendChild(f);
     });
-    $(emptyId).hidden=g.children.length>0;
   }
   $("lbClose").onclick=function(){$("lb").close()};
   $("lb").addEventListener("click",function(e){if(e.target===$("lb"))$("lb").close()});
@@ -235,7 +228,7 @@ dialog p{font-size:14px;margin:12px 0 0}
     });
     es.sort(function(a,b){return (b.d||0)-(a.d||0)});
     var box=$("entries"),side=$("side");box.textContent="";side.textContent="";
-    if(!es.length){var z=document.createElement("p");z.className="mute";z.textContent="nothing here yet.";box.appendChild(z)}
+    
     es.forEach(function(e,i){
       var det=document.createElement("details");det.className="entry";if(i<3)det.open=true;
       var s=document.createElement("summary");s.textContent=(e.d?stamp(e.d):e.raw)+(e.title?" "+e.title:"");det.appendChild(s);
@@ -259,7 +252,7 @@ dialog p{font-size:14px;margin:12px 0 0}
       if(cur)cur.body.push(l)});
     ns.sort(function(a,b){return (b.d||0)-(a.d||0)});
     var box=$("notes");box.textContent="";
-    if(!ns.length){var z=document.createElement("p");z.className="mute";z.textContent="nothing yet.";box.appendChild(z);return}
+    $("musingsBox").hidden=!ns.length;if(!ns.length)return;
     ns.forEach(function(n){var w=document.createElement("div");w.className="note";
       var t=document.createElement("time");t.textContent=n.d?n.d.toLocaleDateString("en-GB",{day:"numeric",month:"short"}).toLowerCase()+(n.d.getFullYear()!==new Date().getFullYear()?" "+n.d.getFullYear():""):n.raw;w.appendChild(t);
       n.body.join("\n").trim().split(/\n\s*\n/).forEach(function(x){if(!x.trim())return;var p=document.createElement("p");p.textContent=x.trim();w.appendChild(p)});

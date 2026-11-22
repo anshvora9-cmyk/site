@@ -21,7 +21,7 @@ everything on the site lives in `content.txt`. open it on github, click the penc
 ## notes vs writing
 
 - `# writing`: blogs and serious pieces. each starts with `## 2026-11-21 21:14 | title`.
-- `# notes` (or `# musings`): everyday random stuff, shows under "musings". each starts with `## 2026-11-22 21:14` (no title), text underneath. newest shows first.
+- `# notes` (or `# musings`): everyday random stuff, shows on the home page under "musings" (scroll down past the photo). each starts with `## 2026-11-22 21:14` (no title), text underneath. newest shows first.
 
 ## adding photos
 
