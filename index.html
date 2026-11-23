@@ -29,6 +29,11 @@ p{margin:0 0 10px}
 .mute{color:var(--mute)}
 body.home .top{position:fixed;left:0;right:0;color:#FFF8EE;text-shadow:0 1px 8px rgba(0,0,0,.5)}
 .hero{position:relative;height:100vh;height:100svh;background:#2a1a12 center 12%/cover no-repeat}
+.boy{position:absolute;right:max(16px,4vw);bottom:22px;z-index:3;width:clamp(120px,15vw,210px);height:auto;pointer-events:none;
+ transform:perspective(600px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .18s ease-out,filter .3s;
+ filter:brightness(var(--b,.9)) drop-shadow(0 0 calc(var(--g,4) * 1px) rgba(255,255,255,.45));animation:crt 4s steps(1) infinite}
+@keyframes crt{0%,100%{opacity:1}47%{opacity:.86}48%{opacity:1}73%{opacity:.93}74%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.boy{animation:none;transition:none}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 65%,rgba(0,0,0,.45))}
 .say{position:absolute;left:max(16px,4vw);bottom:28px;z-index:2;color:#FFF8EE;font-size:14px;text-shadow:0 1px 8px rgba(0,0,0,.6);background:none;border:0;padding:0;cursor:pointer;font-style:italic;text-align:left}
 .now{border:1px dashed var(--line);padding:12px 16px;margin:0 0 34px;font-size:14px}
@@ -137,7 +142,7 @@ dialog p{font-size:14px;margin:12px 0 0}
   <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a><a href="#shelf" data-v="shelf">shelf</a></nav>
 </header>
 
-<div class="view" id="v-home"><div class="hero" id="hero" role="img" aria-label="me as a small boy in a red t-shirt, held by my mum"><button type="button" class="say" id="say"></button></div>
+<div class="view" id="v-home"><div class="hero" id="hero" role="img" aria-label="me as a small boy in a red t-shirt, held by my mum"><button type="button" class="say" id="say"></button><img class="boy" id="boy" src="images/typing-boy.svg" alt="ascii drawing of a boy typing at a computer" draggable="false"></div>
   <section class="likes" id="musingsBox" hidden><h2>musings</h2><div id="notes"></div></section>
   <section class="likes" id="likesBox" hidden><h2>things i like</h2><div class="board" id="likes"></div></section>
 </div>
@@ -449,6 +454,18 @@ dialog p{font-size:14px;margin:12px 0 0}
       $("vLive").appendChild(document.createTextNode(n+" here right now"));
     }
     live();setInterval(live,30000);
+  })();
+
+  /* typing boy follows the cursor */
+  (function(){var boy=$("boy");if(!boy)return;var raf=0,px=0,py=0;
+    function upd(){raf=0;var r=boy.getBoundingClientRect();if(!r.width)return;var cx=r.left+r.width/2,cy=r.top+r.height/2,dx=px-cx,dy=py-cy;
+      var ry=Math.max(-18,Math.min(18,dx/30)),rx=Math.max(-14,Math.min(14,-dy/30)),d=Math.hypot(dx,dy),near=Math.max(0,1-d/700);
+      boy.style.setProperty("--rx",rx.toFixed(1)+"deg");boy.style.setProperty("--ry",ry.toFixed(1)+"deg");
+      boy.style.setProperty("--b",(.85+near*.5).toFixed(2));boy.style.setProperty("--g",(3+near*14).toFixed(1))}
+    function mv(x,y){px=x;py=y;if(!raf)raf=requestAnimationFrame(upd)}
+    window.addEventListener("mousemove",function(e){mv(e.clientX,e.clientY)},{passive:true});
+    window.addEventListener("touchmove",function(e){var t=e.touches[0];if(t)mv(t.clientX,t.clientY)},{passive:true});
+    window.addEventListener("touchstart",function(e){var t=e.touches[0];if(t)mv(t.clientX,t.clientY)},{passive:true});
   })();
 
   route();
