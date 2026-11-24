@@ -124,22 +124,18 @@ dialog.dlg{max-width:min(94vw,760px)}
 .banghead{display:flex;flex-direction:column;gap:4px;margin-bottom:26px}
 .bangwhy{max-width:620px;margin:14px 0 0;font-size:19px;line-height:1.55}.bangday{margin:6px 0 0;font-size:14px}
 .bangt{font-size:clamp(40px,7vw,72px);line-height:1;margin:0;font-weight:500;letter-spacing:-.02em;display:flex;align-items:center;gap:6px}
-.bangt span{font-style:italic;color:#ffd46b;text-shadow:0 0 18px rgba(255,200,80,.45)}
-.burst{width:.55em;height:.55em;fill:#ffd46b;filter:drop-shadow(0 0 8px rgba(255,200,80,.6));animation:bang 3.2s ease-in-out infinite;transform-origin:center}
-@keyframes bang{0%,100%{transform:scale(1) rotate(0)}8%{transform:scale(1.35) rotate(18deg)}16%{transform:scale(.95) rotate(8deg)}30%{transform:scale(1) rotate(0)}}
 .bangs{list-style:none;padding:0;margin:0;counter-reset:b}
 .bangs li{counter-increment:b;display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:18px 0;border-top:1px solid var(--line)}
 .bangs li:last-child{border-bottom:1px solid var(--line)}
 .bangs li::before{content:counter(b,decimal-leading-zero);font-size:28px;color:#555;line-height:1;transition:color .2s}
-.bangs li:hover::before{color:#ffd46b}
-.bangs a.bt{font-size:22px;text-decoration:none}.bangs a.bt:hover{opacity:1;color:#ffd46b}
+.bangs li:hover::before{color:var(--ink)}
+.bangs a.bt{font-size:22px;text-decoration:none}.bangs a.bt:hover{opacity:.7}
 .bangs .meta{display:block;font-size:13px;color:var(--mute);margin-top:3px}.bangs .why{display:block;margin-top:6px}
-.bangs .go{font-size:20px;color:#555;text-decoration:none;transition:transform .2s,color .2s}.bangs li:hover .go{color:#ffd46b;transform:translate(3px,-3px)}
+.bangs .go{font-size:20px;color:#555;text-decoration:none;transition:transform .2s,color .2s}.bangs li:hover .go{color:var(--ink);transform:translate(3px,-3px)}
 .older{margin-top:22px}.older summary{cursor:pointer;color:var(--mute);font-size:15px}
 .older h3{font-size:14px;color:var(--mute);font-weight:400;margin:22px 0 8px}
 .older .ob{margin:0 0 10px}.older .ob a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}.older .ob span{color:var(--mute);font-size:13px;margin-left:8px}
 @media (max-width:600px){.bangs li{grid-template-columns:38px minmax(0,1fr) auto}.bangs li::before{font-size:20px}.bangs a.bt{font-size:19px}}
-@media (prefers-reduced-motion:reduce){.burst{animation:none}}
 .foot{max-width:640px;margin:0 auto;padding:30px 16px 40px;font-size:12px;color:var(--mute);display:flex;gap:18px;flex-wrap:wrap}
 .foot .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5BD16A;margin-right:6px;vertical-align:1px;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35}}
@@ -166,7 +162,7 @@ dialog p{font-size:14px;margin:12px 0 0}
 <div class="view" id="v-home"><div class="hero" id="hero" role="img" aria-label="me as a small boy in a red t-shirt, held by my mum"><button type="button" class="say" id="say"></button></div>
   <section class="likes" id="musingsBox" hidden><div class="musewrap"><div><h2>musings</h2><div id="notes"></div></div><img class="boy" id="boy" src="images/typing-boy.svg" alt="ascii drawing of a boy typing at a computer" draggable="false"></div></section>
   <section class="likes bang" id="bangBox" hidden>
-    <div class="banghead"><h2 class="bangt">brain<span>bang</span><svg class="burst" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2l3.2 10.6L33 6.5l-5.6 9.4L38 20l-10.6 3.2L33 33.5l-9.8-5.6L20 38l-3.2-10.6L7 33.5l5.6-9.4L2 20l10.6-3.2L7 6.5l9.8 5.6z"/></svg></h2>
+    <div class="banghead"><h2 class="bangt">brainbang</h2>
       <p class="bangwhy">i'm so invested in building skills for my career that i forget my brain needs some brainporn too lol. so this is my version of blasting my mind every day with things totally out of my peripherals.</p>
       <p class="mute bangday" id="bangDay"></p></div>
     <ol class="bangs" id="bangToday"></ol>
