@@ -24,7 +24,7 @@ everything on the site lives in `content.txt`. open it on github, click the penc
 
 ## brainbang
 
-- `# brainbang` then one `## 2026-11-24` per day. under it, one link per line: `title | who · type · time | why it's worth it | https://link`. newest day shows first, today's gets a "today" tag.
+- `# brainbang` then one `## 2026-11-24` per day. under it, one link per line: `title | who · type · time | why it's worth it | https://link`. shows on the home page: the newest day is the big numbered list, older days fold into "older bangs".
 
 ## notes vs writing
 

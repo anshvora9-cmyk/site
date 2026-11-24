@@ -121,11 +121,24 @@ dialog.dlg{max-width:min(94vw,760px)}
 .dabout{margin:0 0 18px;line-height:1.65}
 .dnote{border-left:2px solid #444;padding-left:14px;font-style:italic;margin:0 0 18px}
 @media (max-width:600px){.detail{grid-template-columns:1fr;padding:20px}.dcov img,.dcov .dfake{margin:0 auto;max-width:180px;max-height:40vh}}
-.bbday{margin:0 0 38px}.bbday h2{margin:0 0 14px;font-size:15px;letter-spacing:.06em;text-transform:lowercase;color:var(--mute)}
-.bbday h2 b{color:var(--ink);font-weight:500;margin-left:8px}
-.bbi{display:block;margin:0 0 16px;padding-left:16px;border-left:1px solid var(--line)}
-.bbi a{font-size:19px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35)}.bbi a:hover{border-color:#fff;opacity:1}
-.bbi .meta{display:block;font-size:13px;color:var(--mute);margin-top:2px}.bbi .why{display:block;margin-top:4px}
+.banghead{display:flex;flex-direction:column;gap:4px;margin-bottom:26px}
+.bangt{font-size:clamp(40px,7vw,72px);line-height:1;margin:0;font-weight:500;letter-spacing:-.02em;display:flex;align-items:center;gap:6px}
+.bangt span{font-style:italic;color:#ffd46b;text-shadow:0 0 18px rgba(255,200,80,.45)}
+.burst{width:.55em;height:.55em;fill:#ffd46b;filter:drop-shadow(0 0 8px rgba(255,200,80,.6));animation:bang 3.2s ease-in-out infinite;transform-origin:center}
+@keyframes bang{0%,100%{transform:scale(1) rotate(0)}8%{transform:scale(1.35) rotate(18deg)}16%{transform:scale(.95) rotate(8deg)}30%{transform:scale(1) rotate(0)}}
+.bangs{list-style:none;padding:0;margin:0;counter-reset:b}
+.bangs li{counter-increment:b;display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:18px 0;border-top:1px solid var(--line)}
+.bangs li:last-child{border-bottom:1px solid var(--line)}
+.bangs li::before{content:counter(b,decimal-leading-zero);font-size:28px;color:#555;line-height:1;transition:color .2s}
+.bangs li:hover::before{color:#ffd46b}
+.bangs a.bt{font-size:22px;text-decoration:none}.bangs a.bt:hover{opacity:1;color:#ffd46b}
+.bangs .meta{display:block;font-size:13px;color:var(--mute);margin-top:3px}.bangs .why{display:block;margin-top:6px}
+.bangs .go{font-size:20px;color:#555;text-decoration:none;transition:transform .2s,color .2s}.bangs li:hover .go{color:#ffd46b;transform:translate(3px,-3px)}
+.older{margin-top:22px}.older summary{cursor:pointer;color:var(--mute);font-size:15px}
+.older h3{font-size:14px;color:var(--mute);font-weight:400;margin:22px 0 8px}
+.older .ob{margin:0 0 10px}.older .ob a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}.older .ob span{color:var(--mute);font-size:13px;margin-left:8px}
+@media (max-width:600px){.bangs li{grid-template-columns:38px minmax(0,1fr) auto}.bangs li::before{font-size:20px}.bangs a.bt{font-size:19px}}
+@media (prefers-reduced-motion:reduce){.burst{animation:none}}
 .foot{max-width:640px;margin:0 auto;padding:30px 16px 40px;font-size:12px;color:var(--mute);display:flex;gap:18px;flex-wrap:wrap}
 .foot .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5BD16A;margin-right:6px;vertical-align:1px;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35}}
@@ -146,11 +159,17 @@ dialog p{font-size:14px;margin:12px 0 0}
 <body>
 <header class="top">
   <a href="#home" class="brand">ansh</a>
-  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a><a href="#shelf" data-v="shelf">shelf</a><a href="#brainbang" data-v="brainbang">brainbang</a></nav>
+  <nav aria-label="sections"><a href="#about" data-v="about">about</a><a href="#friends" data-v="friends">friends</a><a href="#elsewhere" data-v="elsewhere">elsewhere</a><a href="#writing" data-v="writing">writing</a><a href="#shelf" data-v="shelf">shelf</a></nav>
 </header>
 
 <div class="view" id="v-home"><div class="hero" id="hero" role="img" aria-label="me as a small boy in a red t-shirt, held by my mum"><button type="button" class="say" id="say"></button></div>
   <section class="likes" id="musingsBox" hidden><div class="musewrap"><div><h2>musings</h2><div id="notes"></div></div><img class="boy" id="boy" src="images/typing-boy.svg" alt="ascii drawing of a boy typing at a computer" draggable="false"></div></section>
+  <section class="likes bang" id="bangBox" hidden>
+    <div class="banghead"><h2 class="bangt">brain<span>bang</span><svg class="burst" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2l3.2 10.6L33 6.5l-5.6 9.4L38 20l-10.6 3.2L33 33.5l-9.8-5.6L20 38l-3.2-10.6L7 33.5l5.6-9.4L2 20l10.6-3.2L7 6.5l9.8 5.6z"/></svg></h2>
+      <p class="mute">what i'm learning. one bang a day. <span id="bangDay"></span></p></div>
+    <ol class="bangs" id="bangToday"></ol>
+    <details class="older" id="bangOlder" hidden><summary>older bangs</summary><div id="bangRest"></div></details>
+  </section>
   <section class="likes" id="likesBox" hidden><h2>things i like</h2><div class="board" id="likes"></div></section>
 </div>
 
@@ -193,12 +212,6 @@ dialog p{font-size:14px;margin:12px 0 0}
 
 <dialog id="bk" class="dlg"><div class="detail"><div class="dcov" id="bkC"></div><div><p class="dkind" id="bkK"></p><p class="dtitle" id="bkT"></p><p class="dby" id="bkA"></p><p class="dabout" id="bkAb"></p><p class="dnote" id="bkN"></p><p><a id="bkGo" href="#" target="_blank" rel="noopener" hidden>read it ↗</a></p><button type="button" class="link" id="bkClose">close</button></div></div></dialog>
 
-<div class="view" id="v-brainbang"><div class="page">
-  <h1>brainbang</h1>
-  <p class="mute">what i'm learning, one day at a time. click anything and go.</p>
-  <div id="bb" style="margin-top:34px"></div>
-</div></div>
-
 <footer class="foot" id="foot" hidden><span id="vTotal"></span><span id="vLive"></span></footer>
 
 <dialog id="lb"><img id="lbImg" alt=""><p id="lbCap"></p><p><button type="button" class="link" id="lbClose">close</button></p></dialog>
@@ -207,7 +220,7 @@ dialog p{font-size:14px;margin:12px 0 0}
 (function(){
   var $=function(i){return document.getElementById(i)};
   function route(){
-    var v=(location.hash||"#home").slice(1);if(v==="notes"||v==="musings")v="home";if(!$("v-"+v))v="home";
+    var v=(location.hash||"#home").slice(1);if(v==="notes"||v==="musings")v="home";if(v==="brainbang"){v="home";setTimeout(function(){var e=$("bangBox");if(e&&!e.hidden)e.scrollIntoView({behavior:"smooth"})},400)}if(!$("v-"+v))v="home";
     document.querySelectorAll(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+v)});
     document.querySelectorAll("nav a").forEach(function(a){a.dataset.v===v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
     document.body.classList.toggle("home",v==="home");window.scrollTo(0,0);
@@ -338,20 +351,22 @@ dialog p{font-size:14px;margin:12px 0 0}
     var days=[],cur=null;
     raw.forEach(function(l){var m=l.match(/^##\s*(.+)$/);if(m){cur={d:pd(m[1].split("|")[0]),raw:m[1].trim(),items:[]};days.push(cur);return}
       if(cur&&l.trim())cur.items.push(l.trim())});
-    days.sort(function(a,b){return (b.d||0)-(a.d||0)});
-    var box=$("bb");if(!box)return;box.textContent="";
-    var nav=document.querySelector('nav a[data-v="brainbang"]');if(nav)nav.hidden=!days.length;
-    var today=new Date();today.setHours(0,0,0,0);
-    days.forEach(function(dy){var sec=document.createElement("section");sec.className="bbday";var h=document.createElement("h2");
-      h.textContent=dy.d?dy.d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}).toLowerCase():dy.raw;
-      if(dy.d){var dd=new Date(dy.d);dd.setHours(0,0,0,0);if(+dd===+today){var t=document.createElement("b");t.textContent="today";h.appendChild(t)}}
-      sec.appendChild(h);
-      dy.items.forEach(function(it){var c=it.split("|").map(function(x){return x.trim()}),url="";c=c.filter(function(x){if(/^https?:\/\//.test(x)){url=x;return false}return true});
-        var w=document.createElement("div");w.className="bbi";var a=document.createElement(url?"a":"span");a.textContent=c[0];if(url){a.href=url;a.target="_blank";a.rel="noopener"}w.appendChild(a);
-        if(c[1]){var me=document.createElement("span");me.className="meta";me.textContent=c[1];w.appendChild(me)}
-        if(c[2]){var wy=document.createElement("span");wy.className="why";wy.textContent=c[2];w.appendChild(wy)}
-        sec.appendChild(w)});
-      box.appendChild(sec)});
+    days=days.filter(function(d){return d.items.length});days.sort(function(a,b){return (b.d||0)-(a.d||0)});
+    $("bangBox").hidden=!days.length;if(!days.length)return;
+    function parse(it){var c=it.split("|").map(function(x){return x.trim()}),url="";c=c.filter(function(x){if(/^https?:\/\//.test(x)){url=x;return false}return true});return {t:c[0],meta:c[1]||"",why:c[2]||"",url:url}}
+    function fmt(d){return d?d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}).toLowerCase():""}
+    var top=days[0],today=new Date();today.setHours(0,0,0,0);var td=top.d?new Date(top.d):null;if(td)td.setHours(0,0,0,0);
+    $("bangDay").textContent=(td&&+td===+today?"today":fmt(top.d))+" · day "+days.length+".";
+    var ol=$("bangToday");ol.textContent="";
+    top.items.map(parse).forEach(function(x){var li=document.createElement("li"),mid=document.createElement("div");
+      var a=document.createElement(x.url?"a":"span");a.className="bt";a.textContent=x.t;if(x.url){a.href=x.url;a.target="_blank";a.rel="noopener"}mid.appendChild(a);
+      if(x.meta){var m=document.createElement("span");m.className="meta";m.textContent=x.meta;mid.appendChild(m)}
+      if(x.why){var w=document.createElement("span");w.className="why";w.textContent=x.why;mid.appendChild(w)}
+      li.appendChild(mid);var go=document.createElement(x.url?"a":"span");go.className="go";go.textContent="\u2197";if(x.url){go.href=x.url;go.target="_blank";go.rel="noopener";go.setAttribute("aria-label","open "+x.t)}li.appendChild(go);ol.appendChild(li)});
+    var rest=$("bangRest");rest.textContent="";$("bangOlder").hidden=days.length<2;
+    days.slice(1).forEach(function(dy){var h=document.createElement("h3");h.textContent=fmt(dy.d)||dy.raw;rest.appendChild(h);
+      dy.items.map(parse).forEach(function(x){var p=document.createElement("p");p.className="ob";var a=document.createElement(x.url?"a":"span");a.textContent=x.t;if(x.url){a.href=x.url;a.target="_blank";a.rel="noopener"}p.appendChild(a);
+        if(x.meta){var sp=document.createElement("span");sp.textContent=x.meta;p.appendChild(sp)}rest.appendChild(p)})});
   }
   function notes(raw){
     var ns=[],cur=null;
