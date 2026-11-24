@@ -22,6 +22,10 @@ everything on the site lives in `content.txt`. open it on github, click the penc
 
 - `# likes`: random images that show up as a collage when you scroll down on the home page. one per line: `images/file.jpg` (optionally ` | a few words`).
 
+## brainbang
+
+- `# brainbang` then one `## 2026-11-24` per day. under it, one link per line: `title | who · type · time | why it's worth it | https://link`. newest day shows first, today's gets a "today" tag.
+
 ## notes vs writing
 
 - `# writing`: blogs and serious pieces. each starts with `## 2026-11-21 21:14 | title`.

@@ -86,3 +86,9 @@ Manifest | Netflix | mystery drama | a plane lands five years late but for the p
 The Egg | Andy Weir | short story | a guy dies, has one conversation, and finds out what every person he's ever met really is. five minutes long. | | https://www.galactanet.com/oneoff/theegg_mod.html
 Exhalation | Ted Chiang | short story | a robot opens up its own brain to see how it works and figures out its whole world is slowly running down. sad in the best way. | | https://www.lightspeedmagazine.com/fiction/exhalation/
 But what is a neural network? | 3Blue1Brown | youtube | how ai actually learns, drawn out so even a finance guy gets it. 19 minutes. | | https://www.youtube.com/watch?v=aircAruvnKk
+
+# brainbang
+## 2026-11-23
+The Egg | andy weir · short story · 5 min | a guy dies and finds out what everyone he ever met really was. | https://www.galactanet.com/oneoff/theegg_mod.html
+Exhalation | ted chiang · short story · 30 min | a robot opens its own brain and realises its world is running down. | https://www.lightspeedmagazine.com/fiction/exhalation/
+But what is a neural network? | 3blue1brown · video · 19 min | how ai actually learns, drawn out so it finally makes sense. | https://www.youtube.com/watch?v=aircAruvnKk
